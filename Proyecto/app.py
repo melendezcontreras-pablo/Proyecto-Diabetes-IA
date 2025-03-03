@@ -11,18 +11,6 @@ with open('scaler.pkl', 'rb') as scaler_file:
 
 app = Flask(__name__)
 
-# Definir rangos válidos para los valores ingresados
-RANGOS = {
-    "embarazos": (0, 17),
-    "glucosa": (0, 199),
-    "presion": (0, 122),
-    "espesor_piel": (0, 99),
-    "insulina": (0, 846),
-    "imc": (0, 67.1),
-    "diabetes_pedigree": (0.08, 2.42),
-    "edad": (21, 81)
-}
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -31,20 +19,7 @@ def home():
 def predict():
     try:
         # Obtener los valores del formulario
-        genero = float(request.form['genero'])
-        features = []
-        
-        for key in RANGOS:
-            valor = float(request.form[key])
-            min_val, max_val = RANGOS[key]
-            
-            if valor < min_val or valor > max_val:
-                return render_template('index.html', prediction_text=f'Error: {key} debe estar entre {min_val} y {max_val}.')
-            
-            features.append(valor)
-        
-        # Agregar género a los datos
-        features.insert(0, genero)  # Insertar el género al inicio
+        features = [float(x) for x in request.form.values()]
         features_array = np.array([features])
         
         # Escalar los datos
