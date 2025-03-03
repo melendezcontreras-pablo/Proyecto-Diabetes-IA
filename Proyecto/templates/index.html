@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Diabetes</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        form { display: inline-block; text-align: left; }
+        input, select { display: block; margin: 10px auto; padding: 5px; }
+        button { padding: 10px; background: blue; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Predicción de Diabetes</h2>
+    <p>Ingrese los valores para la predicción:</p>
+    <form action="/predict" method="post">
+        <select name="genero" required>
+            <option value="1">Varón</option>
+            <option value="0">Hembra</option>
+        </select>
+        <input type="number" name="embarazos" placeholder="Número de embarazos (0-17)" required>
+        <input type="number" name="glucosa" placeholder="Nivel de glucosa (0-199 mg/dL)" required>
+        <input type="number" name="presion" placeholder="Presión arterial (0-122 mm Hg)" required>
+        <input type="number" name="espesor_piel" placeholder="Espesor de la piel (0-99 mm)" required>
+        <input type="number" name="insulina" placeholder="Nivel de insulina (0-846 µU/mL)" required>
+        <input type="number" name="imc" placeholder="IMC (0-67.1)" required>
+        <input type="number" name="diabetes_pedigree" placeholder="Diabetes Pedigree Function (0.08-2.42)" required>
+        <input type="number" name="edad" placeholder="Edad (21-81 años)" required>
+        <button type="submit">Predecir</button>
+    </form>
+    
+    {% if prediction_text %}
+        <h3>{{ prediction_text }}</h3>
+    {% endif %}
+</body>
+</html>
